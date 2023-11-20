@@ -1,0 +1,11 @@
+{
+  "name": "04_four_lesson",
+  "version": "1.0.0",
+  "description": "In this project we will learn more about NPM",
+  "main": "app.js",
+  "scripts": {
+    "test": " "
+  },
+  "author": "Luis Navarro <jnavarro_93@hotmail.com>",
+  "license": "MIT"
+}
