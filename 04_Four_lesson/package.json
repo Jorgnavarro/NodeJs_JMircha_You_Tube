@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "In this project we will learn more about NPM",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "test": " "
+    "test": "script personalizado =P"
   },
   "author": "Luis Navarro <jnavarro_93@hotmail.com>",
   "license": "MIT"
