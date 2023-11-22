@@ -1,9 +1,10 @@
+import { readFileSync, writeFileSync } from "node:fs";
 import {createInterface} from 'readline';
 import chalk from 'chalk';
 
 
 const tasks = [];
-
+const DbFile = "tasks.txt";
 /*Parámetros para poder interactuar con la interfaz */
 const rl = createInterface({
     input: process.stdin,
@@ -19,12 +20,38 @@ function displayMenu(){
     console.log("4. Exit");
 }
 
+function loadTasks(){
+    //lectura y carga de tareas, lectura de archivo
+    try {
+        const data = readFileSync(DbFile, "utf-8");
+        const lines = data.split("\n");
+        tasks.length = 0;
+
+        lines.forEach(line => {
+            if(line.trim()!== ""){
+                const [task, completed] = line.split("|");
+                tasks.push({task, completed: completed === true || false});
+            }
+        });
+        console.log(chalk.grey.bgGreenBright.bold("The database tasks have been loaded"));
+    } catch (err) {
+        console.log(chalk.red.bold("You don't have any task.\n\n"));
+    }
+}
+
+function saveTask(){
+    const data = tasks.map(task => `${task.task}|${task.completed}`).join("\n");
+    writeFileSync(DbFile, data, "utf-8");
+    console.log(chalk.green.bold("\ntask saved in the database successfully!!\n\n"));
+}
+
 function addTask(){
     rl.question(chalk.cyanBright.bold("Write your new task: "), (task) =>{
         tasks.push({
             task, completed : false
         })
         console.log(chalk.green.bold("\ntask saved successfully!!\n\n"));
+        saveTask();
         displayMenu();
         selectAnOption();
     })
@@ -54,9 +81,11 @@ function modifiedStatusTask (){
         if(index>=0 && index < tasks.length){
             if(tasks[index].completed === false){
                 tasks[index].completed = true;
+                saveTask();
                 console.log(chalk.bgGreen.bold("\nTask change to complete successfully!\n"));
             }else{
                 tasks[index].completed = false;
+                saveTask();
                 console.log(chalk.bgRedBright.bold("\nTask change to pending successfully!\n"));
             }
         }else{
@@ -91,6 +120,8 @@ function selectAnOption (){
         }
     })
 }
+
+loadTasks();
 
 displayMenu();
 
