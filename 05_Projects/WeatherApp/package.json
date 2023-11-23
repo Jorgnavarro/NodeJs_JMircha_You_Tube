@@ -1,0 +1,17 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "In this app you can consult information about de weather around de world",
+  "main": "app.js",
+  "type" : "module",
+  "scripts": {
+    "start" : "node app.js"
+  },
+  "keywords": [],
+  "author": "Luis Navarro",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "chalk": "^5.3.0"
+  }
+}
